@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { PlaygroundContext } from "../../../PlaygroundContext"
+import { FileNameItem } from "./FileNameItem"
+
+import styles from './index.module.scss'
 
 export default function FileNameList() {
     const { 
@@ -17,10 +20,16 @@ export default function FileNameList() {
         setTabs(Object.keys(files))
     }, [files])
 
-    return <div>
+    return <div className={styles.tabs}>
         {
             tabs.map((item, index) => (
-                <div onClick={()=> setSelectedFileName(item)}>{item} </div>
+               <FileNameItem 
+                 key={item + index}
+                 value={item} 
+                actived={selectedFileName === item} 
+                onClick={()=> setSelectedFileName(item)}
+               >
+               </FileNameItem>
             ))
         }
     </div>
