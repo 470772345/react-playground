@@ -1,4 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import ReactPlayground from './ReactPlayground'
+import App from './App.tsx'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<ReactPlayground />)
+ReactDOM.createRoot(document.getElementById('root')!).render(<App />)
