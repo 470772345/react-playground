@@ -14,7 +14,6 @@ export default function Preview() {
     useEffect(() => {
         const res = compile(files);
         setCompiledCode(res);
-        setIframeUrl(getIframeUrl())
     }, [files]);
 
     const getIframeUrl = () => {
@@ -29,6 +28,10 @@ export default function Preview() {
         )
         return URL.createObjectURL(new Blob([res], { type: 'text/html' }))
     }
+
+    useEffect(() => {
+        setIframeUrl(getIframeUrl())
+    }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode]);
 
     const [iframeUrl, setIframeUrl] = useState(getIframeUrl());
 
