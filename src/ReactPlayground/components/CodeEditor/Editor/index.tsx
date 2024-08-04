@@ -15,12 +15,12 @@ interface Props {
 }
 
 export default function Editor(props: Props) {
-  const code = `
-  import lodash from 'lodash';
-  export default function App() {
-    return <div>xxx</div>
-}
-    `;
+//   const code = `
+//   import lodash from 'lodash';
+//   export default function App() {
+//     return <div>xxx</div>
+// }
+//     `;
 
   const { file, onChange, options } = props;
 

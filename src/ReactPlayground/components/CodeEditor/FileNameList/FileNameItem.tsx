@@ -1,30 +1,55 @@
-import React, { useState, useRef, useEffect, MouseEventHandler } from 'react'
-import styles from './index.module.scss'
-import { Popconfirm } from 'antd'
-import classnames from 'classnames'
+import React, { useState, useRef, useEffect, MouseEventHandler } from "react";
+import styles from "./index.module.scss";
+import { Popconfirm } from "antd";
+import classnames from "classnames";
 
 export interface FileNameItemProps {
-    value: string
-    actived: boolean
-    onClick: () => void
+  value: string;
+  actived: boolean;
+  onClick: () => void;
+  onEditComplete: (name: string) => void
 }
-
+  
 export const FileNameItem: React.FC<FileNameItemProps> = (props) => {
-    const {
-        value,
-        actived = false,
-        onClick,
-      } = props
-    
-      const [name, setName] = useState(value)
-     
-      return (
-        <div
-          className={classnames(styles['tab-item'], actived ? styles.actived : null)}
-          onClick={onClick}
-        >
-            <span>{name}</span>
-        </div>
-      )
+  const { value, actived = false, onClick , onEditComplete} = props;
 
-}
+  const [name, setName] = useState(value);
+
+  const [editing, setEditing] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleDoubleClick = () => {
+    setEditing(true);
+    setTimeout(() => {
+      inputRef?.current?.focus();
+    }, 0);
+  };
+
+  const handleInputBlur = () => {
+    setEditing(false);
+    onEditComplete(name);
+  };
+
+
+  return (
+    <div
+      className={classnames(
+        styles["tab-item"],
+        actived ? styles.actived : null
+      )}
+      onClick={onClick}
+    >
+      {editing ? (
+        <input
+          ref={inputRef}
+          className={styles["tabs-item-input"]}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={handleInputBlur}
+        />
+      ) : (
+        <span onDoubleClick={handleDoubleClick}>{name}</span>
+      )}
+    </div>
+  );
+};
